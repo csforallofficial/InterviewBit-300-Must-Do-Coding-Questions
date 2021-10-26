@@ -48,24 +48,28 @@ Explanation 2:
 */
 
 
-int dp[6500];
-int helper(int i, string A, set<string>& B){
-    if(i==A.size())
-        return 1;
-    if(dp[i]!=-1)
-        return dp[i];
-    string temp;
-    for(int j = i; j < A.size(); j++){
-        temp += A[j];
-        if(B.find(temp)!=B.end())
-            if(helper(j+1,A,B)) return dp[i]=1;
+class Solution {
+public:
+    int dp[301];
+    int helper(int i, string A, unordered_set<string>& B){
+        if(i==A.size())
+            return 1;
+        if(dp[i]!=-1)
+            return dp[i];
+        string temp;
+        for(int j = i; j < A.size(); j++){
+            temp += A[j];
+            if(B.find(temp)!=B.end()){
+                if(helper(j+1,A,B)) return dp[i] = 1;
+            }
+        }
+        return dp[i] = 0;
     }
-    return dp[i] = 0;
-}
-int Solution::wordBreak(string A, vector<string> &B) {
-    memset(dp,-1,sizeof(dp));
-    set<string> st;
-    for(auto it:B)
-        st.insert(it);
-    return helper(0,A,st);
-}
+    bool wordBreak(string s, vector<string>& wordDict) {
+        memset(dp,-1,sizeof(dp));
+        unordered_set<string> st;
+        for(auto it:wordDict)
+            st.insert(it);
+        return helper(0,s,st);
+    }
+};
