@@ -50,7 +50,7 @@ public:
         for(int i = 0; i < s.size(); i++){
             string left = s.substr(0,i+1);
             if(st.find(left)!=st.end()){
-                string right = s.substr(i+1,s.size()-i);
+                string right = s.substr(i+1,s.size()-i-1);
                 solve(right,ans+left+" ",res,st);
             }
         }
