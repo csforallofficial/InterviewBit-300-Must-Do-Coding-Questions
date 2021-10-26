@@ -36,6 +36,7 @@ Constraints:
 0 <= nums[i] <= 1000
 */
 
+//DP - O(N^2) Approach
 
 class Solution {
 public:
@@ -61,5 +62,32 @@ public:
             }
         }
         return dp[0];
+    }
+};
+
+
+//Greedy Approch - O(N)
+
+
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        int l = 0, r = 0, res = 0, flag = 0;
+        while(r < nums.size()-1){
+            int farthest = 0;
+            for(int i = l; i <= r; i++)
+                farthest = max(farthest,i+nums[i]);
+            l = r+1;
+            r = farthest;
+            if(l>r){
+                flag = 1;
+                break;
+            }
+            res += 1;
+        }
+        if(flag == 1)
+            return -1;
+        else
+            return res;
     }
 };
